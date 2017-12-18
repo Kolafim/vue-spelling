@@ -1,7 +1,7 @@
 vue.js 中文论坛，手机端页面重构。
 
 ## 项目地址
-[demo地址](https://kolafim.github.io/vue-spelling/dist/index.html)
+[demo地址](https://kolafim.github.io/vue-spelling/dist/index?mid=100535&phone=15879220191&gid=1513230544838.html)
 
 > 手机端预览
 
