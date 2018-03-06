@@ -38,6 +38,6 @@ const router = new Router({
   routes
 })
 
-router.push({name: 'index', params: {title: ''}})
+router.push({name: 'index', params: {title: '拼大奖',type:0}})
 
 export default router

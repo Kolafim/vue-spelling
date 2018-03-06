@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!--Appbar-->
-    <!-- <appbar :title="this.$route.params.title"></appbar> -->
+    <appbar :title="this.$route.params.title" v-if="this.$route.params.type"></appbar>
     <!--appbar-->
 
     <!--Release-->
@@ -13,7 +13,7 @@
 
     <!--Router View-->
     <router-view class="main"
-                 :class="{'hide-overflow': common.isHideMainOverflow}"></router-view>
+                 :class="{'hide-overflow': globalData.isHideMainOverflow}"></router-view>
     <!--router view-->
 
     <!--ButtomNav-->
@@ -24,18 +24,19 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-// import appbar from './components/appbar/appbar'
+import appbar from './components/appbar/appbar'
 // import bottomnav from './components/bottomnav/bottomnav'
 // import releasePage from './components/releasePage/releasePage'
 export default {
   computed: {
     ...mapState([
       'common',
+      'globalData',
       'release'
     ])
   },
   components: {
-    // appbar,
+    appbar,
     // bottomnav,
     // releasePage
   }

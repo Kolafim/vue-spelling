@@ -1,4 +1,15 @@
 /*********** Mutations ***********/
+//globalData
+export const FETCH_PRICE_SUC = 'FETCH_PRICE_SUC'
+export const FETCH_MESSAGE_SUC = 'FETCH_MESSAGE_SUC'
+export const SHOW_PANEL_OVERFLOW = 'SHOW_PANEL_OVERFLOW'
+export const HIDE_PANEL_OVERFLOW = 'HIDE_PANEL_OVERFLOW'
+export const MESSAGE_HIDE_TRUE = 'MESSAGE_HIDE_TRUE'
+export const REG_RUN_TIME = 'REG_RUN_TIME'
+export const HELP_SUCCESS = 'HELP_SUCCESS'
+export const HELP_SUCCESS_INIT = 'HELP_SUCCESS_INIT'
+
+
 // topics
 export const FETCH_TOPICS_REQ = 'FETCH_TOPICS_REQ'
 export const FETCH_TOPICS_SUC = 'FETCH_TOPICS_SUC'

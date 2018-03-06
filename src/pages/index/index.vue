@@ -2,10 +2,8 @@
     <div class="index-panel">
       <div class="container">
         <div class="head textcenter">
-          <div class="top-banner loadimg-default" style="background-image:url(../../../static/image/banner.png)">
-            <a :href="'#/message'">
-              <img class="t-b-right-btn" src="../../../static/image/banner_right_btn.png"></img>
-            </a>
+          <div class="top-banner loadimg-default" :style="'background-image:url('+globalData.localimg+'image/banner.png)'">
+            <img class="t-b-right-btn" :src="globalData.localimg+'image/banner_right_btn.png'" @click="tapMessage"></img>
           </div>
           <div v-if="reTimeData.mode != 1" class="head-text-cell">
             <div class="head-text-view">
@@ -27,64 +25,38 @@
             </div>
           </div>
         </div>
-        <div class="main textcenter">
+        <div class="p-main textcenter">
           <div class="main-content">
             <div class="m-top-count textright">
-              <div class="users-count"><span class="middle">{{user_state.team_progress}}/5 邀请进度</span></div>
+              <div class="users-count"><span class="middle">{{globalData.priceData.list?globalData.priceData.list.length:1}}/5 邀请进度</span></div>
             </div>
-            <div class="user-list flex-line">
+            <div class="user-list flex2 flex-line">
               <div v-for="(users_item,users_index) in [0,1,2,3,4]" class="user-item">
                 <div class="user-pic">
-                  <img v-if="user_state.member[users_item]" @click="users_index>0 ? 'joinSpell':''" class="user-avatar" :src="this.globalData.imghost+user_state.member[users_item].helpheadimg"></img>
-                  <img v-else @click="joinSpell" class="user-avatar" :src="'../../../static/image/user_type_bg_'+users_index+'.png'"></img>
-                  <img v-if="users_index == 0" class="users-main-text" src="../../../static/image/users_main_text.png"></img>
+                  <img v-if="globalData.priceData.list && globalData.priceData.list[users_item]" @click="users_index>0 ? 'joinSpell':''" class="user-avatar" :src="globalData.priceData.list[users_item].helpheadimg.replace(/^(\/){1,2}group1/,globalData.imghost+'//group1')"></img>
+                  <img v-else @click="joinSpell" class="user-avatar" :src="globalData.localimg+'image/user_type_bg_'+users_index+'.png'"></img>
+                  <img v-if="users_index == 0" class="users-main-text" :src="globalData.localimg+'image/users_main_text.png'"></img>
                 </div>
-                <img class="user-type-icon" :src="'../../../static/image/user_type_default_'+users_index+'.png'"></img>
+                <img class="user-type-icon" :src="globalData.localimg+'image/user_type_'+((globalData.priceData.list && globalData.priceData.list[users_item])?'light':'default')+'_'+users_index+'.png'"></img>
               </div>
             </div>
             <div class="main-btn">
-              <template v-if="user_state.ismain && user_state.team_progress<5">
-                <button  class="btn-main" open-type="share" >立即去邀请</button>
+              <template v-if="options.mid == '' || options.pgid=='' || options.phone==''">
+                <div class="textcenter red">数据参数错误</div>
               </template>
-              <template v-if="user_state.ismain && user_state.team_progress>=5">
-                <button class="btn-main" @click='exchange' >兑换一注，继续开团</button>
-              </template>
-              <template v-if="user_state.team_progress<5 && !user_state.ismain">
+              <template v-else-if="globalData.priceData.list && globalData.priceData.list.length < 5">
                 <button class="btn-main" @click="joinSpell">立即帮好友助力</button>
               </template>
-               <template v-if="user_state.team_progress>=5 && !user_state.ismain">
-                <button class="display btn-main" >本团已满</button>
+               <template v-else>
+                <button class="display btn-main">本团已满</button>
               </template>
-
             </div>
 
             <div class="image-list">
-              <img class="arrow-icon" src="../../../static/image/arrow_default.png"></img>
-              <div class="lottery-cell" v-if="user_state.prize" >
-                <div v-if="lotteryData" class="lottery-item">
-                  <div class="l-i-head flex-line flex2">
-                    <div class="l-i-h-id"><span>{{lotteryData.issueno}}</span>期</div>
-                    <div class="l-i-h-right">已获得</div>
-                  </div>
-                  <div class="l-i-main">
-                    <div class="l-i-m-num-list flex">
-                      <div class="l-i-m-num-list-left">
-                        <img v-for="(numitem_a,idx2) in lotteryData.new_number"
-                          class="l-i-m-num-item"
-                          src="../../../static/image/ball_red.png" ><span>{{numitem_a}}</span></img>
-                      </div>
-                      <div class="l-i-m-num-list-right">
-                        <img v-for="(numitem_b,idx3) in lotteryData.new_refernumber"
-                          class="l-i-m-num-item"
-                          src="../../../static/image/ball_blue.png" ><span>{{numitem_b}}</span></img>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <img v-else @click="(user_state.gid==options.pgid  && user_state.team_progress==4 || !options.pgid && user_state.team_progress==4) ?'exchange':''" src="../../../static/image/daletou.png"></img>
-              <img class="arrow-icon" src="../../../static/image/arrow_default.png"></img>
-              <img @click='download' src="../../../static/image/downloadapp.png"></img>
+              <img class="arrow-icon" :src="globalData.localimg+'image/arrow_default.png'"></img>
+              <img :src="globalData.localimg+'image/daletou.png'"></img>
+              <img class="arrow-icon" :src="globalData.localimg+'image/arrow_default.png'"></img>
+              <img @click='download' :src="globalData.localimg+'image/downloadapp.png'"></img>
             </div>
           </div>
         </div>
@@ -92,6 +64,12 @@
 
         </div>
       </div>
+
+      <!--Children Router-->
+      <transition enter-active-class="animated opacityIn"
+                  leave-active-class="animated opacityOut">
+          <router-view class="details"></router-view>
+      </transition>
     </div>
 </template>
 
@@ -115,35 +93,23 @@ export default {
               mid:'',
               phone:'',
               pgid:''
-            },
-            user_state:{
-              gid:null,//个人团id
-              ismain:0,
-              login_state: false,// 注册状态  false：未登录，true：已登陆
-
-              open_state: '',  // 开团状态 0：未开团，1：已开团
-
-              prize:false,   //兑奖状态 false:已兑奖 true:未兑奖
-
-              team_progress:'',// 开团进度，0/5：人数
-              help: true,
-              member: []
             }
         }
     },
     created () {
       //console.log('location.search:',location.search);
 
-      //this.getOptions();
       //this.locationSearch = location.search;
       // setTimeout(()=>{
       //   this.locationSearch = location.search;
       // },2000);
+      // console.log(this.globalData);
+
       this.getOptions();
       console.log('options:',this.options);
 
       let rt = new ReTime();
-      let rt_timer = setInterval(()=>{
+      let rt_func = ()=>{
         try{
           this.reTimeData = rt.setTime(rt_timer);
         }catch(e){
@@ -153,28 +119,22 @@ export default {
             rt_timer = 0;
           }
         }
-      },1000);
+      };
+      let rt_timer = setInterval(rt_func,1000);
+      rt_func();
 
       this.$store.dispatch('fetchIndexAction', {
-        uid:this.options.mid, prizeid:this.options.pgid
+        uid:this.options.mid, prizeid:this.options.pgid, callback:()=>{
+          //console.log("end?",this.globalData.priceData.timestamp);
+          rt.uploadEndDate(this.globalData.priceData.timestamp); //更新截止时间
+        }
       });
-
-      // 如果 cookie 缓存存在，则显示 accesstoken
-      // let accesstoken = getCookie('accesstoken') || 'a97e7a07-e6ee-4fa1-942b-a7a06015e28b';
-      // if (accesstoken) {
-      //     this.accesstoken = accesstoken
-      // }
     },
     computed: {
         ...mapState([
-            'user_info',
-            'globalData',
-            'tool'
+            'globalData'
         ]),
         ...mapGetters([
-            'REPLIES_COUNT',
-            'COLLECTS_COUNT',
-            'MY_TOPICS_COUNT'
         ])
     },
     components: {
@@ -183,68 +143,41 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'SHOW_MAIN_OVERFLOW',
-            'LOGOUT',
-            'CLEAR_MSG_DATA'
+            'SHOW_PANEL_OVERFLOW'
         ]),
-        openSignupIndex(){
-
-        },
         download(){
-
+          //location.href='http://dtznapp-1254344927.cosgz.myqcloud.com/aifenqian.apk';
+          location.href='http://sj.qq.com/myapp/detail.htm?apkName=com.dtzn.dtrobot';
         },
         joinSpell(){
+          //console.log(222)
+          this.$store.commit('SHOW_PANEL_OVERFLOW');
+          this.$router.push({ name: 'fixedPanel', params: { title:'拼大奖', type:0 } })
 
+
+          // this.$store.dispatch('fetchHelpAction', {
+          //   uid:this.options.mid, prizeid:this.options.pgid, callback:()=>{
+          //     //console.log("end?",this.globalData.priceData.timestamp);
+          //     rt.uploadEndDate(this.globalData.priceData.timestamp); //更新截止时间
+          //   }
+          // });
         },
         getOptions(){
           let _arr = location.search.replace(/^\?/,'').split('&');
-          let _obj = {};
+          //let _obj = {};
           for(let _i=0;_i<_arr.length;_i++){
             let _c = _arr[_i].split("=");
             if(_c.length >= 2){
-              if(_c[0] == 'mid') _obj.mid = _c[1];
-              if(_c[0] == 'phone') _obj.phone = _c[1];
-              if(_c[0] == 'gid') _obj.pgid = _c[1];
+              if(_c[0] == 'mid') this.options.mid = _c[1];
+              if(_c[0] == 'phone') this.options.phone = _c[1];
+              if(_c[0] == 'gid') this.options.pgid = _c[1];
             }
           }
-          this.options = _obj;
-          return _obj;
+          //this.options = _obj;
+          //return _obj;
         },
-
-
-        // ----- log in
-        tapToLogIn () {
-            // 判断输入
-            if (!this.accesstoken) {
-                this.$store.dispatch('showSnackbarAction', {
-                    msg: 'accesstoken 不能为空',
-                    isWarn: true
-                })
-                return
-            }
-            // 发送登录请求
-            this.$store.dispatch('fetchUserAction', {
-                accesstoken: this.accesstoken
-            });
-        },
-        // ----- log out
-        tapToLogOut () {
-            this.LOGOUT();
-            this.CLEAR_MSG_DATA();
-            this.$store.dispatch('showSnackbarAction', {
-                msg: '已退出登录',
-                isWarn: false
-            })
-        },
-        // ----- 跳转到 usertopics
-        tapToUserTopics (title, type) {
-            // 锁定根路由
-            this.$store.commit('SHOW_MAIN_OVERFLOW');
-            this.$router.push({ name: 'usertopics', params: { title, type } })
-        },
-        // 点击切换提示显示
-        tapToToggleTip () {
-            this.isTipShow = !this.isTipShow
+        tapMessage(){
+          this.$router.push({ name: 'message', params: { title:'活动说明', type:1 } })
         }
     }
 }
@@ -253,9 +186,17 @@ export default {
 <style lang="scss">
 @import '../../assets/sass/_base.scss';
 .index-panel {
+    font-size: .3rem;
     // background: $ExtraLightGray;
+    .btn-main {
+      background-color:#ff6600;
+      color:#fff;
+    }
+    .btn-main.display {
+      background-color:#e8965f;
+    }
     .head {
-      margin-bottom: 30px
+      margin-bottom: .3rem;
     }
     .head .top-banner {
       width:100%;
@@ -270,7 +211,7 @@ export default {
       margin-top:-24px;
     }
     .head .head-text-cell {
-      margin-top:-30px;
+      margin-top:-.3rem;
       position:relative;
     }
     .head .head-text-cell .head-text-view {
@@ -279,9 +220,9 @@ export default {
       display: inline-block;
       min-width: 50%;
       border-radius: 30px;
-      padding:10px 60px;
+      padding:.09rem .4rem;
       line-height: 1em;
-      font-size: 26px;
+      font-size: .25rem;
     }
     .head .head-text-cell .head-text-view span {
       vertical-align: middle;
@@ -292,18 +233,18 @@ export default {
     .head .head-text-cell .head-text-view .time-num {
       background-color: rgba(0,0,0,.5);
       color:#fcfcfc;
-      font-size: .9em;
+      font-size: .8em;
       padding:2px 4px;
       display: inline-block;
       line-height: normal;
     }
-    .main .instruction-cell {
-      font-size: 26px;
+    .p-main .instruction-cell {
+      font-size: .25rem;
       position:relative;
       padding-top:10px;
       margin:20px 16px 60px;
     }
-    .main .instruction-cell .i-c-title {
+    .p-main .instruction-cell .i-c-title {
       background-color:#ff9000;
       font-size: .95em;
       border-radius: 30px;
@@ -313,20 +254,21 @@ export default {
       left:24px;
       top:0;
     }
-    .main .instruction-cell .i-c-text {
+    .p-main .instruction-cell .i-c-text {
       background-color: #ff3333;
       line-height: 1.7em;
       padding:40px 36px 20px;
       border-radius: 16px
     }
     .m-top-count, .user-list, .user-list .user-item {
-      padding:0 22px
+      padding:0 .2rem;
     }
     .user-list {
-      margin:20px 0;
+      margin:.2rem 0;
     }
     .user-list .user-item {
       overflow: hidden;
+      width:19.99%;
     }
     .user-list .user-item .user-pic {
       position:relative;
@@ -341,16 +283,18 @@ export default {
       width:25px;
     }
     .user-list .user-item .user-pic .user-avatar {
+      display: block;
       max-width:100%;
       border-radius: 50%;
       border:1px solid #ddd;
-      height:calc(20vw - 9px - 44px);
+      height: calc(20vw - .08rem - .4rem);
+      overflow: hidden
     }
     .user-list .user-item .user-type-icon {
       width:27px;
       max-height:27px;
     }
-    .main .m-top-count .users-count {
+    .p-main .m-top-count .users-count {
       display: inline-block;
       background-color: rgba(0,0,0,.45);
       border-radius: 12px;
@@ -359,11 +303,11 @@ export default {
       padding:0 20px;
       color:#fff;
     }
-    .main .m-top-count .users-count span {
+    .p-main .m-top-count .users-count span {
       padding:4px 0;
       display: inline-block;
     }
-    .main .m-top-count .users-count:after {
+    .p-main .m-top-count .users-count:after {
       content:" ";
       display:inline-block;
       height:6px;
@@ -379,22 +323,25 @@ export default {
       right:2px;*/
       vertical-align: middle;
     }
-    .main .image-list > img {
+    .p-main .image-list > img {
       width:100%;
       display: block;
       margin:20px auto;
     }
-    .main .image-list .arrow-icon {
+    .p-main .image-list .arrow-icon {
       width:31px;
     }
-    .main .main-btn {
+    .p-main .main-btn {
       padding:0 44px;
       margin:50px 0;
     }
-    .main .main-btn button {
-      font-size: 40px;
-      border-radius: 20px;
-      line-height: 2.8em
+    .p-main .main-btn button {
+      font-size: .4rem;
+      border-radius: .18rem;
+      line-height: 2.8em;
+      display: block;
+      width: 100%;
+      border: none;
     }
 
 

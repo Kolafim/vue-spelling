@@ -8,7 +8,7 @@ Vue.config.productionTip = false
 
 // axios
 import axios from 'axios'
-axios.defaults.baseURL = 'http://192.168.8.239'   // base url
+axios.defaults.baseURL = 'http://192.168.8.249:8081/note-web-boss'   // base url
 //axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 // import css

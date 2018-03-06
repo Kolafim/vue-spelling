@@ -1,14 +1,13 @@
 <template>
-  <mu-appbar :zDepth="0">
-    <!--logo-->
-    <div class="logo">
-      <img src="../../assets/images/logo.png"
-           alt="">
+  <div class="appbar">
+    <div class="flex2 flex-line">
+      <div class="a-left">
+        <!-- <i class="arrow-left" @click="goback"></i> -->
+      </div>
+      <div class="a-center">{{title}}</div>
+      <div class="a-right"> </div>
     </div>
-    <mu-flat-button label="发布"
-                    slot="right"
-                    @click="tapToRelease"></mu-flat-button>
-  </mu-appbar>
+  </div>
 </template>
 
 <script>
@@ -30,22 +29,8 @@ export default {
       'HIDE_RELEASE_PAGE',
       'SHOW_MAIN_OVERFLOW'
     ]),
-    // 点击进入发布页
-    // ============
-    tapToRelease () {
-      if (!this.login.data.success) {
-        this.$router.replace({ name: 'user' });
-        this.$store.commit('HANDLE_CHANGE', 'user');
-
-        // 显示提示
-        this.$store.dispatch('showSnackbarAction', {
-          msg: '请先登录',
-          isWarn: true
-        })
-      } else {
-        this.SHOW_RELEASE_PAGE();
-        this.SHOW_MAIN_OVERFLOW();
-      }
+    goback(){
+      this.$router.go(-1);
     }
   }
 }
@@ -53,24 +38,37 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/sass/_base.scss';
-.mu-appbar {
+.appbar {
   position: relative;
-  height:46px;
-  // background: $primary !important;
-  .logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
-    width: 48px;
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img {
-      width: 30px;
-      height: 30px;
+  color:#fff;
+  background: #f64444;
+  font-size: .3rem;
+
+  div {
+    height:46px;
+    line-height: 46px;
+  }
+
+  .arrow-left{
+    display: block;
+    padding:0 20px;
+    &:after {
+      content: " ";
+      display: inline-block;
+      height: 8px;
+      width: 8px;
+      border-width: 1px 1px 0 0;
+      border-color: #fff;
+      border-style: solid;
+      -webkit-transform: matrix(-0.71, -0.71, 0.71, -0.71, 0, 0);
+      transform: matrix(-0.71, -0.71, 0.71, -0.71, 0, 0);
+      position: relative;
+      top: -2px;
     }
+  }
+
+  .a-right {
+    // width:50px;
   }
 }
 </style>

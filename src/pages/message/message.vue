@@ -1,231 +1,46 @@
 <template>
     <div class="message">
-        <!--Refresh Control-->
-        <mu-refresh-control :refreshing="common.refresh.isShow"
-                            :trigger="trigger"
-                            @refresh="refresh" />
-        <!--refresh control-->
-    
-        <!--Info Page-->
-        <transition enter-active-class="animated slideInUp"
-                    leave-active-class="animated slideOutDown">
-            <infoPage v-show="info.isInfoPageShow"></infoPage>
-        </transition>
-        <!--info page-->
-    
-        <!--Login-->
-        <mu-flexbox class="login"
-                    orient="vertical"
-                    v-if="!login.data.success">
-            <!--image-->
-            <img class="img"
-                 src="./images/mountain.png"
-                 alt="">
-    
-            <!--title-->
-            <p class="title">登录后可查看未读消息</p>
-    
-            <!--button-->
-            <div class="button-wrapper">
-                <mu-raised-button label="登录"
-                                  backgroundColor="#41b883"
-                                  :fullWidth="true"
-                                  @click="tapToLogin"></mu-raised-button>
-            </div>
-        </mu-flexbox>
-        <!--login-->
-    
-        <!--Content-->
-        <div class="content"
-             v-else>
-            <!--new msgs-->
-            <div class="new-msgs">
-                <!--title-->
-                <div class="title">
-                    &nbsp&nbsp&nbsp新消息({{HAS_NOT_READ_MESSAGES_COUNT}})
-                    <div class="btn-mark-all"
-                         @click="tapMarkAll"
-                         v-show="HAS_NOT_READ_MESSAGES_COUNT">
-                        {{message.isMarkAllFetching?'正在标记...':'全部已读'}}
-                    </div>
-                </div>
-    
-                <!--lists-->
-                <div class="lists">
-                    <!--tip-->
-                    <p class="tip"
-                       v-show="message.data.hasnot_read_messages.length === 0">没有消息</p>
-    
-                    <!--list-->
-                    <div class="list"
-                         :data-topicid="list.topic.id"
-                         v-for="list in message.data.hasnot_read_messages"
-                         @click="tapToInfo($event)">
-    
-                        <!--from-->
-                        <mu-flexbox justify="space-between">
-                            <div class="username">来自
-                                <b>{{list.author.loginname}}</b>
-                            </div>
-                            <div class="time">{{list.reply.create_at | filterTime}}</div>
-                        </mu-flexbox>
-    
-                        <!--body-->
-                        <div class="body">
-                            <span>回复了你的话题&nbsp</span>
-                            <span class="topic-title">
-                                {{list.topic.title}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <!--past msgs-->
-            <div class="past-msgs">
-                <!--title-->
-                <div class="title">
-                    &nbsp&nbsp&nbsp已读消息
-                </div>
-                <!--lists-->
-                <div class="lists">
-                    <!--tip-->
-                    <p class="tip"
-                       v-show="message.data.has_read_messages.length === 0">没有消息</p>
-                    <!--list-->
-                    <div class="list"
-                         :ref="'list_' + index"
-                         :data-topicid="list.topic.id"
-                         v-for="(list, index) in message.data.has_read_messages"
-                         @click="tapToInfo($event)">
-                        <!--from-->
-                        <mu-flexbox justify="space-between">
-                            <div class="username">来自
-                                <b>{{list.author.loginname}}</b>
-                            </div>
-                            <div class="time">{{list.reply.create_at | filterTime}}</div>
-                        </mu-flexbox>
-    
-                        <!--body-->
-                        <div class="body">
-                            <span>回复了你的话题&nbsp</span>
-                            <span class="topic-title">
-                                {{list.topic.title}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="head"></div>
+        <div class="p-main">
+          <div class="title">本活动由大仝智能科技有限公司旗下爱分钱APP独家赞助</div>
+          <div class="content">
+            <div>1、一位用户发起开团拼大奖，获得彩主的称号，彩主需要分享至微信由四位好友捧场助力凑齐“金木水火土”五行图，方可免费获得当周周六超级大乐透体彩号码一注，参与角逐1000万的机会。</div>
+            <div>2、彩主可每周二、三、四、五邀请四位彩民捧场助力，工作人员会在周六出票。</div>
+            <div>3、每个用户只可帮好友捧场助力一次。自己开团不限次数。</div>
+            <div>4、彩主每开一次团都需要不同彩民捧场。</div>
+            <div>5、周一进行开奖公布。用户可在每周六晚上8：30分网上查看开奖结果，也可每周一可在爱分钱APP/【爱分钱】微信公众号查询获奖情况。</div>
+            <div>6、获得四五六等奖的用户，爱分钱会在三个工作日内将奖金直接充入该用户爱分钱账号。</div>
+            <div>7、获得一二三等奖的用户，爱分钱会在三个工作日内联系中奖用户，提供协助领奖服务或代为办理领奖事宜。</div>
+            <div>8、超级大乐透共设六个奖级，一、二、三等奖为浮动奖，四、五、六等奖为固定奖。中奖结果与超级大乐透官方公布一致。</div>
+            <div>9、拼大奖每期活动时间：每7天为一个周期。</div>
+            <div>10、每一期活动开始后，彩主在邀请彩民捧场助力时间内，未达到人数要求，爱分钱会保留权益，活动顺延。</div>
+            <div>11、对采用不法手段恶意刷奖的用户，爱分钱将取消其获奖资格，并保留追究对方相关法律责任的权利。</div>
+            <div>12、本活动最终解释权归爱分钱APP品牌拥有者大仝智能科技有限公司所有。</div>
+            <div>13、本活动不向未成年人兑付奖金。</div>
+            <div>14、所有用户可在国家企业信用信息公示系统查询大仝智能的相关企业资质。</div>
+          </div>
         </div>
-        <!--content-->
+        <div class="foot"></div>
+      </div>
     </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import { getCookie } from '../../assets/js/cookies.js'
-import { filterTime } from '../../assets/js/filters.js'
-import infoPage from '../../components/infoPage/infoPage'
+// import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     data () {
-        let accesstoken = getCookie('accesstoken');
         return {
-            accesstoken,
-            // ----- refresh control
-            trigger: null
+
         }
-    },
-    mounted () {
-        this.trigger = this.$el;
     },
     computed: {
-        ...mapState([
-            'login',
-            'message',
-            'info',
-            'common'
-        ]),
-        ...mapGetters([
-            'HAS_NOT_READ_MESSAGES_COUNT'
-        ])
     },
     components: {
-        infoPage
     },
     filters: {
-        filterTime
     },
     methods: {
-        ...mapMutations([
-            'SHOW_MAIN_OVERFLOW',
-            'TOGGLE_INFO_PAGE_DISPLAY',
-            'SUC_COLLECT',
-            'DEL_COLLECTED'
-        ]),
-        // 点击登录
-        // =======
-        tapToLogin () {
-            if (!this.login.data.success) {
-                this.$router.replace({ name: 'user' });
-                this.$store.commit('HANDLE_CHANGE', 'user');
-            }
-        },
-        // 标记全部已读
-        // ==========
-        tapMarkAll () {
-            let accesstoken = this.accesstoken
-            this.$store.dispatch('fetchMarkAllAction', {
-                accesstoken
-            })
-        },
-        // 进入详情页
-        // =========
-        tapToInfo (e) {
-            let topicid = e.currentTarget.dataset.topicid;
-
-            this.SHOW_MAIN_OVERFLOW();
-            this.TOGGLE_INFO_PAGE_DISPLAY();
-            this.$store.commit('COMMIT_ID', {
-                id: topicid
-            });
-
-            // 请求数据放在了父级元素；
-            // 因为不是 router 模式，子元素在没有获得 id 的情况下，就执行了 created
-            this.$store.dispatch('fetchInfoAction', {
-                topicid
-            });
-
-            // 点击打开详情页时匹配该文章是否被收藏
-            this.checkCollected(this.login.userinfo.collect_topics, topicid)
-        },
-        // 检查该文章是否被收藏
-        // ================
-        checkCollected (collectedArr, topicid) {
-            function contains (arr, obj) {
-                let i = arr.length;
-                while (i--) {
-                    if (arr[i].id === obj) {
-                        return true
-                    }
-                }
-                return false
-            };
-
-            if (contains(collectedArr, topicid)) {
-                this.SUC_COLLECT()
-            } else {
-                this.DEL_COLLECTED()
-            }
-        },
-        // 上拉刷新
-        // =======
-        refresh () {
-            let accesstoken = this.accesstoken
-            this.$store.dispatch('fetchMessageAction', {
-                accesstoken,
-                isRefresh: true
-            })
-        }
     }
 }
 </script>
@@ -233,85 +48,22 @@ export default {
 <style lang="scss">
 @import '../../assets/sass/_base.scss';
 .message {
-    background: #fff;
-    .login {
-        margin-top: 2rem;
-        .img {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
-        .title {
-            font-size: .32rem;
-            color: $ExtraLightBlack;
-        }
-        .button-wrapper {
-            width: 2.5rem;
-        }
-    }
-    .content {
-        .new-msgs,
-        .past-msgs {
-            width: 100%;
-            .title {
-                position: relative;
-                width: 100%;
-                height: .66rem;
-                line-height: .66rem;
-                background: $ExtraLightGray;
-                &:before {
-                    content: '';
-                    display: block;
-                    width: 6px;
-                    height: 100%;
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    background: $Gray;
-                }
-                .btn-mark-all {
-                    position: absolute;
-                    right: .32rem;
-                    top: 0;
-                    font-size: .22rem;
-                    color: $primary;
-                }
-            }
-            .lists {
-                .tip {
-                    width: 100%;
-                    text-align: center;
-                }
-                .list {
-                    width: 100%;
-                    padding: .32rem;
-                    box-sizing: border-box;
-                    color: $ExtraLightBlack;
-                    border-bottom: 1px solid $ExtraLightGray;
-                    &:last-child {
-                        border-bottom: none;
-                    }
-                    .username,
-                    .time {
-                        color: lighten($ExtraLightBlack, 40%);
-                    }
-                    .body {
-                        margin-top: .12rem;
-                    }
-                }
-            }
-        }
-        .past-msgs {
-            .lists {
-                .list {
-                    .time {
-                        color: lighten($ExtraLightBlack, 50%) !important;
-                    }
-                    .body {
-                        color: lighten($ExtraLightBlack, 50%);
-                    }
-                }
-            }
-        }
-    }
+  .container .p-main {
+    margin:.3rem .4rem;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,.2);
+    border-radius: 6px;
+    padding:.3rem;
+    font-size: .3rem;
+  }
+  .container .p-main .title {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-top:.2rem;
+    margin-bottom: .4rem;
+  }
+  .container .p-main .content > div {
+    margin: .22rem 0 .1rem;
+    line-height: 1.6em;
+  }
 }
 </style>
